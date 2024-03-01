@@ -60,16 +60,19 @@ jobs:
         env:
           AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - name: Set AZD platform type to devcetner
+        run: azd config set platform.type devcenter
+        shell: pwsh
+
       - name: Provision Infrastructure
         run: azd provision --no-prompt
         env:
           AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
           AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
           AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+          AZURE_DEVCENTER_NAME: ${{ vars.AZURE_DEVCENTER_NAME }}
+          AZURE_DEVCENTER_PROJECT: ${{ vars.AZURE_DEVCENTER_PROJECT }}
+          AZURE_DEVCENTER_CATALOG: ${{ vars.AZURE_DEVCENTER_CATALOG }}
+          AZURE_DEVCENTER_ENVIRONMENT_DEFINITION: ${{ vars.AZURE_DEVCENTER_ENVIRONMENT_DEFINITION }}
+          AZURE_DEVCENTER_ENVIRONMENT_TYPE: ${{ vars.AZURE_DEVCENTER_ENVIRONMENT_TYPE }}
 
-      - name: Deploy Application
-        run: azd deploy --no-prompt
-        env:
-          AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
-          AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
-          AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
